@@ -26,18 +26,21 @@ class Player(pygame.sprite.Sprite):
         self.coyote_timer = 0.0
         self.jump_buffer_timer = 0.0
 
+        # remember last facing direction (False = right, True = left)
+        self.facing_left = False
+
         # visuals
         self.visual = None
         if USE_SPRITES:
             paths = get_default_paths()
-            # paths['sheet'] = '/home/joncrall/code/binary_content/spritesheets/assets-v001.png'
-            # paths['meta'] = '/home/joncrall/code/cc_templates/platformer/assets-v001_metadata.json'
+            paths['sheet'] =  "C:/Users/29ozgach1/Downloads/assets-v001.png"
+            paths['meta'] =  r"C:\Users\29ozgach1\Downloads\assets-v001_metadata.json"
             sheet = SpriteSheet(paths["sheet"], paths["meta"])
             anims = {
-                "idle":   sheet.anim_surfs("idle", entity_name='bytebuddy'),
-                "run":    sheet.anim_surfs("run", entity_name='bytebuddy'),
-                "jump":   sheet.anim_surfs("jump", entity_name='bytebuddy'),
-                "fall":   sheet.anim_surfs("fall", entity_name='bytebuddy'),
+                "idle":   sheet.anim_surfs("idle", entity_name='dude'),
+                "run":    sheet.anim_surfs("run", entity_name='dude'),
+                "jump":   sheet.anim_surfs("jump", entity_name='dude'),
+                "fall":   sheet.anim_surfs("fall", entity_name='dude'),
                 "attack": sheet.anim_surfs("attack", entity_name='bytebuddy'),
                 "hurt":   sheet.anim_surfs("hurt", entity_name='bytebuddy'),
             }
@@ -51,8 +54,10 @@ class Player(pygame.sprite.Sprite):
         self.vel.x = 0
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.vel.x = -MOVE_SPEED
+            self.facing_left = True
         if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
             self.vel.x = MOVE_SPEED
+            self.facing_left = False
 
     def queue_jump(self):
         """Record a jump press; will fire when allowed (buffered)."""
@@ -125,9 +130,10 @@ class Player(pygame.sprite.Sprite):
         # consume buffered jump if allowed
         if (self.jump_buffer_timer > 0) and (self.on_ground or self.coyote_timer > 0):
             self._do_jump()
-
+        #print(f"call update with self.visual = {self.visual} ")
         # visuals
         if self.visual:
+        
             if not self.on_ground:
                 state = "jump" if self.vel.y < 0 else "fall"
             elif abs(self.vel.x) > 0.1:
@@ -135,6 +141,9 @@ class Player(pygame.sprite.Sprite):
             else:
                 state = "idle"
             if not state == "fall":
+                # ensure AnimSprite.set() uses the current facing direction
+                self.visual.flip = self.facing_left
                 self.visual.set(state)
             self.visual.rect.topleft = self.rect.topleft
-            self.visual.update(dt, flip=(self.vel.x < 0))
+            # flip based on last non-zero input so idle keeps the last facing
+            self.visual.update(dt, flip=self.facing_left)
