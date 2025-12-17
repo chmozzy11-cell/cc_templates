@@ -28,6 +28,9 @@ class Player(pygame.sprite.Sprite):
 
         # remember last facing direction (False = right, True = left)
         self.facing_left = False
+        
+        # rotation accumulator for jump spin
+        self.rotation = 0.0
 
         # visuals
         self.visual = None
@@ -135,15 +138,19 @@ class Player(pygame.sprite.Sprite):
         if self.visual:
         
             if not self.on_ground:
-                state = "jump" if self.vel.y < 0 else "fall"
+                state = "idle" if self.vel.y < 0 else "fall"
+                # accumulate rotation while airborne (360 degrees per second)
+                self.rotation = (self.rotation + 360 * dt) % 360
             elif abs(self.vel.x) > 0.1:
                 state = "run"
+                self.rotation = 0.0
             else:
                 state = "idle"
+                self.rotation = 0.0
             if not state == "fall":
                 # ensure AnimSprite.set() uses the current facing direction
                 self.visual.flip = self.facing_left
                 self.visual.set(state)
             self.visual.rect.topleft = self.rect.topleft
             # flip based on last non-zero input so idle keeps the last facing
-            self.visual.update(dt, flip=self.facing_left)
+            self.visual.update(dt, flip=self.facing_left, rotation=self.rotation)

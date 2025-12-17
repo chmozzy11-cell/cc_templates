@@ -1,0 +1,117 @@
+{
+  "image_path": "C:/Users/29ozgach1/Downloads/assets-v001.png",
+  "image_size": {
+    "w": 1024,
+    "h": 1536
+  },
+  "boxes": [
+    {
+      "id": 0,
+      "rect": {
+        "x": 65,
+        "y": 30,
+        "w": 150,
+        "h": 240
+      },
+      "entity_name": "dude",
+      "animation_name": "run",
+      "frame_number": 0
+    },
+    {
+      "id": 1,
+      "rect": {
+        "x": 257,
+        "y": 30,
+        "w": 150,
+        "h": 240
+      },
+      "entity_name": "dude",
+      "animation_name": "",
+      "frame_number": 0
+    },
+    {
+      "id": 2,
+      "rect": {
+        "x": 641,
+        "y": 30,
+        "w": 150,
+        "h": 240
+      },
+      "entity_name": "dude",
+      "animation_name": "",
+      "frame_number": 0
+    },
+    {
+      "id": 3,
+      "rect": {
+        "x": 449,
+        "y": 30,
+        "w": 150,
+        "h": 240
+      },
+      "entity_name": "dude",
+      "animation_name": "",
+      "frame_number": 0
+    },
+    {
+      "id": 4,
+      "rect": {
+        "x": 833,
+        "y": 30,
+        "w": 150,
+        "h": 240
+      },
+      "entity_name": "dude",
+      "animation_name": "idle",
+      "frame_number": 0
+    },
+    {
+      "id": 5,
+      "rect": {
+        "x": 69,
+        "y": 374,
+        "w": 167,
+        "h": 211
+      },
+      "entity_name": "dude",
+      "animation_name": "idle",
+      "frame_number": 1
+    },
+    {
+      "id": 6,
+      "rect": {
+        "x": 263,
+        "y": 369,
+        "w": 162,
+        "h": 218
+      },
+      "entity_name": "dude",
+      "animation_name": "",
+      "frame_number": 0
+    },
+    {
+      "id": 7,
+      "rect": {
+        "x": 449,
+        "y": 365,
+        "w": 251,
+        "h": 241
+      },
+      "entity_name": "dude",
+      "animation_name": "",
+      "frame_number": 0
+    },
+    {
+      "id": 8,
+      "rect": {
+        "x": 739,
+        "y": 363,
+        "w": 248,
+        "h": 262
+      },
+      "entity_name": "dude",
+      "animation_name": "",
+      "frame_number": 0
+    }
+  ]
+}

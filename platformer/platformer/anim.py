@@ -14,6 +14,8 @@ class AnimSprite(pygame.sprite.Sprite):
         self.flip = False
         # target display size for frames (keep consistent)
         self.size = (50, 50)
+        # rotation in degrees
+        self.rotation = 0.0
         frame0: pygame.surface.Surface = self.frames[0]
         new_frame = pygame.transform.scale(frame0, self.size)
         self.image = new_frame
@@ -34,8 +36,9 @@ class AnimSprite(pygame.sprite.Sprite):
             # preserve position
             self.rect = self.image.get_rect(topleft=self.rect.topleft)
   
-    def update(self, dt, flip=False):
+    def update(self, dt, flip=False, rotation=0.0):
         self.flip = flip
+        self.rotation = rotation
         self.timer += dt
 
         if self.timer >= 1.0 / self.fps:
@@ -46,7 +49,9 @@ class AnimSprite(pygame.sprite.Sprite):
             new_size = (50,50)
             new_frame = pygame.transform.scale(frame, new_size)
             # flip horizontally only (x=True, y=False)
-            self.image = pygame.transform.flip(new_frame, True, False) if self.flip else new_frame
+            flipped_frame = pygame.transform.flip(new_frame, True, False) if self.flip else new_frame
+            # apply rotation
+            self.image = pygame.transform.rotate(flipped_frame, self.rotation)
             # preserve top-left after replacing the image
             self.rect = self.image.get_rect(topleft=self.rect.topleft)
             #print(self.flip)
